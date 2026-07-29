@@ -68,8 +68,8 @@ class GameObject:
     def draw(self):
         """Метод отрисовки объекта. Переопределяется в дочерних классах."""
         raise NotImplementedError(
-            f"Класс '{self.__class__.__name__}'"
-            f"должен реализовать метод draw()"
+            f'Класс "{self.__class__.__name__}"'
+            f'должен реализовать метод draw()'
         )
 
 
