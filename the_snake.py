@@ -69,7 +69,7 @@ class GameObject:
         """Метод отрисовки объекта. Переопределяется в дочерних классах."""
         raise NotImplementedError(
             f'Класс "{self.__class__.__name__}"'
-            f'должен реализовать метод draw()'
+            'должен реализовать метод draw()'
         )
 
 
@@ -85,8 +85,7 @@ class Apple(GameObject):
         """Инициализация яблока."""
         super().__init__(position, body_color)
 
-        positions_for_check = (occupied_positions if occupied_positions
-                               else [CENTER_POSITION])
+        positions_for_check = occupied_positions or [CENTER_POSITION]
 
         if position is None:
             self.randomize_position(positions_for_check)
@@ -144,14 +143,18 @@ class Snake(GameObject):
         self.next_direction = RIGHT
         self.last = None
 
+        # Очищаем список и добавляем начальную позицию.
+        self.positions.clear()
+        self.positions.append(CENTER_POSITION)
+
     def draw(self):
         """Отрисовка змейки."""
         # Отрисовка головы змейки.
-        super().draw_cell(self.get_head_position(), BORDER_COLOR, 1)
+        self.draw_cell(self.get_head_position(), self.body_color, 1)
 
         # Затирание последнего сегмента.
         if self.last:
-            super().draw_cell(self.last, BOARD_BACKGROUND_COLOR, 0)
+            self.draw_cell(self.last, BOARD_BACKGROUND_COLOR, 0)
 
     def get_head_position(self):
         """Возвращение позиции головы змейки."""
